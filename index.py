@@ -6,6 +6,9 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 import pinecone
 from tqdm.auto import tqdm
 from uuid import uuid4
+import os
+
+
 
 # create the length function
 def tiktoken_len(text):
@@ -39,7 +42,7 @@ def create_index(csv_file_path):
     )
     chunks = text_splitter.split_text(providers_data[6]['description'])[:3]
 
-    OPENAI_API_KEY='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'
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
     model_name = 'text-embedding-ada-002'
 
     embed = OpenAIEmbeddings(

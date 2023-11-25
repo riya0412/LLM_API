@@ -3,12 +3,13 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Pinecone
 import pinecone
 import openai
+import os
 
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # Initialize Pinecone and OpenAI embeddings
 YOUR_API_KEY = "d36342e7-2d57-4a19-be61-75d73dc52f98"
 YOUR_ENV = "gcp-starter"
-OPENAI_API_KEY='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'
 pinecone.init(api_key=YOUR_API_KEY, environment=YOUR_ENV)
 model_name = 'text-embedding-ada-002'
 embed = OpenAIEmbeddings(
@@ -44,7 +45,7 @@ def fetch_providers(query):
     query,  # our search query
     k=3  # return 3 most relevant docs
   )
-
+# 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
   # Extract the provider details from the search results.
   providers = []
   for result in results:
