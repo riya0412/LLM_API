@@ -1,7 +1,8 @@
 Flask
 Gunicorn
-tiktoken==0.5.1
+transformers
+pandas
+tiktoken
 langchain==0.0.208
-pinecone-client[grpc]==2.2.4
-pydantic==1.10.9
+pinecone
 openai

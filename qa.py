@@ -4,8 +4,10 @@ from langchain.vectorstores import Pinecone
 import pinecone
 import openai
 import os
+from dotenv import load_dotenv
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+load_dotenv()
+
 
 # Initialize Pinecone and OpenAI embeddings
 YOUR_API_KEY = "d36342e7-2d57-4a19-be61-75d73dc52f98"
@@ -14,7 +16,7 @@ pinecone.init(api_key=YOUR_API_KEY, environment=YOUR_ENV)
 model_name = 'text-embedding-ada-002'
 embed = OpenAIEmbeddings(
         model=model_name,
-        openai_api_key=OPENAI_API_KEY
+        openai_api_key=os.getenv("OPENAI_API_KEY")
     )
 
 # Load the Pinecone index
