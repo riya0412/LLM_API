@@ -8,7 +8,7 @@ import openai
 # Initialize Pinecone and OpenAI embeddings
 YOUR_API_KEY = "d36342e7-2d57-4a19-be61-75d73dc52f98"
 YOUR_ENV = "gcp-starter"
-OPENAI_API_KEY='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'
+OPENAI_API_KEY='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'
 pinecone.init(api_key=YOUR_API_KEY, environment=YOUR_ENV)
 model_name = 'text-embedding-ada-002'
 embed = OpenAIEmbeddings(
