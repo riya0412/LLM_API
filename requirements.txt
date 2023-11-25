@@ -1,8 +1,6 @@
 Flask
 Gunicorn
-transformers
-pandas
-tiktoken
+tiktoken==0.5.1
 langchain==0.0.208
-pinecone
+pinecone-client[grpc]
 openai
