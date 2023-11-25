@@ -39,7 +39,7 @@ def create_index(csv_file_path):
     )
     chunks = text_splitter.split_text(providers_data[6]['description'])[:3]
 
-    OPENAI_API_KEY='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'
+    OPENAI_API_KEY='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'
     model_name = 'text-embedding-ada-002'
 
     embed = OpenAIEmbeddings(
