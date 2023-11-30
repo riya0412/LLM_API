@@ -34,20 +34,38 @@ def get_providers():
     json_results = []
     for result in top_results:
        json_results.append({
-       "id":result["id"]  ,
-       "name": result["Name"],
-       "designation": result["designation"],
-       'field':result['field'],
-       'phone':result['phone'],
-       "location": result["location"],
-       "description": result["description"],
-       'School':result['School'],
-       'programme':result['programme'],
-       'duration':result['duration'],
-       'company':result['company'],
-       'position':result['position'],
-       'jd':result['JD'],
-       'experience':result['experience'],
+       "id": result["id"],
+      "Name": result["Name"],
+      "phone": result["phone"],
+      "headline": result["headline"],
+      "isApproved": result["isApproved"],
+      "address": {
+                "country": result["address"]["country"],
+                "city": result["address"]["city"],
+                "state": result["address"]["state"],
+                "zipCode": result["address"]["zipCode"],
+                "addressLineOne": result["address"]["addressLineOne"],
+                "addressLineTwo": result["address"]["addressLineTwo"],
+            },
+      "services":{
+        'services_id': result["services"]['services_id'],
+            'services_name': result["services"]['services_name'],
+            'services_desc': result["services"]['services_desc'],
+      },
+      "education":{
+        "School": result["education"]["School"],
+        "programme": result["education"]["programme"],
+        "duration": result["education"]["duration"],
+        'education_description':result["education"]['education_description'],
+      },
+      "workExperience": {
+        "companyName": result["workExperience"]["companyName"],
+        "position": result["workExperience"]["position"],
+        "experience": result["workExperience"]["experience"],
+        "JD": result["workExperience"]["JD"],
+      },
+      "achievements_description": result["achievements_description"],
+      "about": result["about"],
     })
 
     return json.dumps(json_results)

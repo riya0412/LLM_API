@@ -42,7 +42,7 @@ def create_index(csv_file_path):
     length_function=tiktoken_len,
     separators=["\n\n", "\n", " ", ""]
     )
-    chunks = text_splitter.split_text(providers_data[6]['description'])[:3]
+    chunks = text_splitter.split_text(providers_data[6]['about'])[:3]
 
     model_name = 'text-embedding-ada-002'
 
@@ -59,7 +59,7 @@ def create_index(csv_file_path):
     res = embed.embed_documents(texts)
     len(res), len(res[0])
     # find API key in console at app.pinecone.io
-    YOUR_API_KEY = 'd36342e7-2d57-4a19-be61-75d73dc52f98'
+    YOUR_API_KEY = '7a2eff77-fb6e-4c40-aa04-d31f9d32e93c'
     # find ENV (cloud region) next to API key in console
     YOUR_ENV = 'gcp-starter'
     
@@ -70,7 +70,7 @@ def create_index(csv_file_path):
         )
     
     # Create a new Pinecone index
-    index_name = 'langchain-retrieval-augmentation'
+    index_name = 'langchain-augmentation'
     if index_name in pinecone.list_indexes():
         pinecone.delete_index(index_name) # Delete the existing index if it exists
     pinecone.create_index(
@@ -90,24 +90,34 @@ def create_index(csv_file_path):
         metadata = {
             'id':record['id'],
             'name': record['name'],
-            'designation': record['designation'],
-            'field':record['field'],
             'phone':record['phone'],
-            'location': record['location'],
-            'School':record['school'],
+            'headline': record['headline'],
+            'isApproved':record['isApproved'],            
+            'country': record['country'],
+            'city': record['city'],
+            'state': record['state'],
+            'zip': record['zipCode'],
+            'addressone': record['addressLineone'],
+            'addresstwo': record['addressLinetwo'],
+            'services_id': record['services_id'],
+            'services_name': record['services_name'],
+            'services_desc': record['services_description'],
+            'School':record['schoolName'],
             'programme':record['programme'],
-            'duration':record['duration'],
-            'company':record['company'],
+            'duration':record['education_duration'],
+            'education_description':record['education_description'],
+            'company':record['companyName'],
             'position':record['position'],
+            'experience':record['workExperience_duration'],
             'jd':record['job_description'],
-            'experience':record['experience'],
+            'achievements_description':record['achievements_description'],
 
         }
         # now we create chunks from the record text
-        record_texts = text_splitter.split_text(record['description'])
+        record_texts = text_splitter.split_text(record['about'])
         # create individual metadata dicts for each chunk
         record_metadatas = [{
-            "chunk": j, "description": text, **metadata
+            "chunk": j, "about": text, **metadata
         } for j, text in enumerate(record_texts)]
         # append these to current batches
         texts.extend(record_texts)

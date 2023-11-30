@@ -10,7 +10,7 @@ load_dotenv()
 
 
 # Initialize Pinecone and OpenAI embeddings
-YOUR_API_KEY = "d36342e7-2d57-4a19-be61-75d73dc52f98"
+YOUR_API_KEY = "7a2eff77-fb6e-4c40-aa04-d31f9d32e93c"
 YOUR_ENV = "gcp-starter"
 pinecone.init(api_key=YOUR_API_KEY, environment=YOUR_ENV)
 model_name = 'text-embedding-ada-002'
@@ -20,8 +20,8 @@ embed = OpenAIEmbeddings(
     )
 
 # Load the Pinecone index
-index_name = "langchain-retrieval-augmentation"
-text_field = "description"
+index_name = "langchain-augmentation"
+text_field = "about"
 index = pinecone.Index(index_name)
 
 # Create a vector store using the Pinecone index
@@ -40,7 +40,7 @@ def fetch_providers(query):
   # Create a pinecone client.
 
   # Get the pinecone index for providers.
-  index = pinecone.Index("langchain-retrieval-augmentation")
+  # index = pinecone.Index("langchain-retrieval-augmentation")
 
   # Search the index for providers that match the user query.
   results = vectorstore.similarity_search(
@@ -54,19 +54,36 @@ def fetch_providers(query):
     provider = {
       "id": result.metadata["id"],
       "Name": result.metadata["name"],
-      "designation": result.metadata["designation"],
-      "field": result.metadata["field"],
       "phone": result.metadata["phone"],
-      "location": result.metadata["location"],
-      "School": result.metadata["School"],
-      "programme": result.metadata["programme"],
-      "duration": result.metadata["duration"],
-      "company": result.metadata["company"],
-      "position": result.metadata["position"],
-      "JD": result.metadata["jd"],
-      "experience": result.metadata["experience"],
-      "description": result.page_content,
-
+      "headline": result.metadata["headline"],
+      "isApproved": result.metadata["isApproved"],
+      "address": {
+                "country": result.metadata["country"],
+                "city": result.metadata["city"],
+                "state": result.metadata["state"],
+                "zipCode": result.metadata["zip"],
+                "addressLineOne": result.metadata["addressone"],
+                "addressLineTwo": result.metadata["addresstwo"],
+            },
+      "services":{
+        'services_id': result.metadata['services_id'],
+            'services_name': result.metadata['services_name'],
+            'services_desc': result.metadata['services_desc'],
+      },
+      "education":{
+        "School": result.metadata["School"],
+        "programme": result.metadata["programme"],
+        "duration": result.metadata["duration"],
+        'education_description':result.metadata['education_description'],
+      },
+      "workExperience": {
+        "companyName": result.metadata["company"],
+        "position": result.metadata["position"],
+        "experience": result.metadata["experience"],
+        "JD": result.metadata["jd"],
+      },
+      "achievements_description": result.metadata["achievements_description"],
+      "about": result.page_content,
     }
     providers.append(provider)
   print(providers)
