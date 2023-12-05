@@ -21,20 +21,22 @@ def create_index_route():
 
 @app.route('/get_providers', methods=['GET'])
 def get_providers():
-    query = request.args.get("query")
+    queries = request.args.getlist("query")
 
     # Fetch the 5 most suitable providers from your Pinecone index...
     # This will depend on your specific implementation
-    results = fetch_providers(query)
+    results = fetch_providers(queries)
 
     # Extract the top 3 results.
-    top_results = results[:3]
+    # top_results = results
 
     # Convert the results to JSON format.
     json_results = []
-    for result in top_results:
-       json_results.append({
+    for result in results:
+       json_results.append({   
        "id": result["id"],
+       "query":result["query"],
+       "active":0,
       "Name": result["Name"],
       "phone": result["phone"],
       "headline": result["headline"],

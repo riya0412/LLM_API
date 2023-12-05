@@ -27,7 +27,7 @@ index = pinecone.Index(index_name)
 # Create a vector store using the Pinecone index
 vectorstore = Pinecone(index, embed.embed_query, text_field)
 
-def fetch_providers(query):
+def fetch_providers(queries):
   """Returns the complete details of providers from the pinecone index, up to 3 most relevant.
 
   Args:
@@ -41,18 +41,21 @@ def fetch_providers(query):
 
   # Get the pinecone index for providers.
   # index = pinecone.Index("langchain-retrieval-augmentation")
-
+  providers = []
   # Search the index for providers that match the user query.
-  results = vectorstore.similarity_search(
-    query,  # our search query
-    k=3  # return 3 most relevant docs
-  )
+  for query in queries:
+
+        # Search the index for providers that match the user query.
+        results = vectorstore.similarity_search(
+            query,  # our search query
+            k=3  # return 3 most relevant docs
+        )
 # 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
   # Extract the provider details from the search results.
-  providers = []
-  for result in results:
-    provider = {
+        for result in results:
+           provider = {
       "id": result.metadata["id"],
+      "query":query,
       "Name": result.metadata["name"],
       "phone": result.metadata["phone"],
       "headline": result.metadata["headline"],
@@ -85,7 +88,10 @@ def fetch_providers(query):
       "achievements_description": result.metadata["achievements_description"],
       "about": result.page_content,
     }
-    providers.append(provider)
+           providers.append(provider)
   print(providers)
+
+  
+  
   return providers
 
