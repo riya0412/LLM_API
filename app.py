@@ -33,42 +33,48 @@ def get_providers():
     # Convert the results to JSON format.
     json_results = []
     for result in results:
-       json_results.append({   
-       "id": result["id"],
-       "query":result["query"],
-       "active":0,
-      "Name": result["Name"],
-      "phone": result["phone"],
-      "headline": result["headline"],
-      "isApproved": result["isApproved"],
+        json_providers = []
+        for provider in result['recomendation']:
+          json_providers.append({   
+       "id": provider["id"],
+      "Name": provider["Name"],
+      "phone": provider["phone"],
+      "headline": provider["headline"],
+      "isApproved": provider["isApproved"],
       "address": {
-                "country": result["address"]["country"],
-                "city": result["address"]["city"],
-                "state": result["address"]["state"],
-                "zipCode": result["address"]["zipCode"],
-                "addressLineOne": result["address"]["addressLineOne"],
-                "addressLineTwo": result["address"]["addressLineTwo"],
+                "country": provider["address"]["country"],
+                "city": provider["address"]["city"],
+                "state": provider["address"]["state"],
+                "zipCode": provider["address"]["zipCode"],
+                "addressLineOne": provider["address"]["addressLineOne"],
+                "addressLineTwo": provider["address"]["addressLineTwo"],
             },
       "services":{
-        'services_id': result["services"]['services_id'],
-            'services_name': result["services"]['services_name'],
-            'services_desc': result["services"]['services_desc'],
+        'services_id': provider["services"]['services_id'],
+            'services_name': provider["services"]['services_name'],
+            'services_desc': provider["services"]['services_desc'],
       },
       "education":{
-        "School": result["education"]["School"],
-        "programme": result["education"]["programme"],
-        "duration": result["education"]["duration"],
-        'education_description':result["education"]['education_description'],
+        "School": provider["education"]["School"],
+        "programme": provider["education"]["programme"],
+        "duration": provider["education"]["duration"],
+        'education_description':provider["education"]['education_description'],
       },
       "workExperience": {
-        "companyName": result["workExperience"]["companyName"],
-        "position": result["workExperience"]["position"],
-        "experience": result["workExperience"]["experience"],
-        "JD": result["workExperience"]["JD"],
+        "companyName": provider["workExperience"]["companyName"],
+        "position": provider["workExperience"]["position"],
+        "experience": provider["workExperience"]["experience"],
+        "JD": provider["workExperience"]["JD"],
       },
-      "achievements_description": result["achievements_description"],
-      "about": result["about"],
-    })
+      "achievements_description": provider["achievements_description"],
+      "about": provider["about"],
+        })
+        json_results.append({
+            "id": result["id"],
+            "query": result["query"],
+            "active": result["active"],
+            "recomendation": json_providers
+        })
 
     return json.dumps(json_results)
 

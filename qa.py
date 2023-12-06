@@ -41,7 +41,8 @@ def fetch_providers(queries):
 
   # Get the pinecone index for providers.
   # index = pinecone.Index("langchain-retrieval-augmentation")
-  providers = []
+  all_providers = []
+  query_id = 1
   # Search the index for providers that match the user query.
   for query in queries:
 
@@ -50,12 +51,12 @@ def fetch_providers(queries):
             query,  # our search query
             k=3  # return 3 most relevant docs
         )
+        providers = []
 # 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
   # Extract the provider details from the search results.
         for result in results:
            provider = {
       "id": result.metadata["id"],
-      "query":query,
       "Name": result.metadata["name"],
       "phone": result.metadata["phone"],
       "headline": result.metadata["headline"],
@@ -89,9 +90,17 @@ def fetch_providers(queries):
       "about": result.page_content,
     }
            providers.append(provider)
-  print(providers)
+        
+        all_providers.append({
+            "id": query_id,
+            "query": query,
+            "active": 0,
+            "recomendation": providers
+        })
+        
+        query_id += 1
+  
+  print(all_providers)
 
-  
-  
-  return providers
+  return all_providers
 
