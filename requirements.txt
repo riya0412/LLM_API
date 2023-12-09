@@ -5,3 +5,4 @@ langchain==0.0.208
 pinecone-client[grpc]
 openai==0.28.1
 python-dotenv
+flask-cors

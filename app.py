@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import index
 from index import create_index, tiktoken_len # Import the create_index function
 import qa
@@ -6,6 +7,7 @@ from qa import fetch_providers
 import json
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/create_index', methods=['POST'])
 def create_index_route():
