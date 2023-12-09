@@ -76,7 +76,7 @@ def get_providers():
             "recomendation": json_providers
         })
 
-    return json.dumps(json_results)
+    return jsonify(json_results)
 
 
 if __name__ == '__main__':
