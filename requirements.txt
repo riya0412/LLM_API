@@ -6,3 +6,4 @@ pinecone-client[grpc]
 openai==0.28.1
 python-dotenv
 flask-cors
+pymongo
